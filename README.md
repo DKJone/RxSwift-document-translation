@@ -1,6 +1,5 @@
 # RxSwift-文档翻译
 对RxSwift 官方playground的翻译，playGround基于2016年-12月-1日版本
-
 重要提示：使用Rx.playground
 ---
 1.   打开Rx.xcworkspace.
@@ -34,12 +33,6 @@ next* (error | completed)?
 1-->1-->2-->3-->4-->5-->6-->|----> // "|" =正常停止
 --a--b--c--d--e--f--X----> // "X" =错误时停止
 --tap--tap----------tap--> // "|" =永远不停止，例如按钮的点击事件队列
-```
-```
-graph LR
-1-->2;2-->3;3-->4;4-->|-|正常停止 ;4-->|-|错误停止  
-button-->tap
-tap-->tap.....tap....tap;tap.....tap....tap-->|永不停止|...
 ```
 
 ### Observables and observers (aka subscribers)
@@ -399,7 +392,10 @@ subject2.onNext("③")
 ``` 
 #### 3.zip
 绑定最多达8个`Observable`队列源为一个信号源，并发送按原始队列对应序号绑定后的元素，直到每个原始队列在该序号上都有元素。
-```
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/combinelatest.png)
+
+
 graph LR
 1-->2;2-->3;3-->4;4-->5;5-->....  
 A-->B;B-->C;C-->D;D-->...
