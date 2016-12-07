@@ -1,5 +1,5 @@
 # RxSwift-文档翻译
-对RxSwift 官方playground的翻译，playGround基于2016年-12月-1日版本
+对RxSwift 官方playground的翻译，playGround基于2016年-12月-1日版本  
 重要提示：使用Rx.playground
 ---
 1.   打开Rx.xcworkspace.
@@ -491,3 +491,257 @@ subject2.onNext("🍐")
 
 第五章 Transforming Operators 转换操作符
 ---
+转换由`observable`队列发出的下一个事件元素
+#### 1. map 应用一个转换闭包发送`observable`队列，返回一个转换后的新队列
+```swift
+example("map") {
+let disposeBag = DisposeBag()
+Observable.of(1, 2, 3)
+.map { $0 * $0 }
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+```
+#### 2. flatMap and flatMapLatest   
+转换由`Observable`队列发出的元素，并合并多个为一个信号队列。
+在任何一个队列发出行的元素师这个转换依然有效。`flatMap`和`flatMapLatest`的区别就在于`flatMapLast`只从内部队列发送最近的元素。
+```swift
+example("flatMap and flatMapLatest") {
+let disposeBag = DisposeBag()
+
+struct Player {
+var score: Variable<Int>
+}
+
+let 👦🏻 = Player(score: Variable(80))
+let 👧🏼 = Player(score: Variable(90))
+
+let player = Variable(👦🏻)
+
+player.asObservable()
+.flatMap { $0.score.asObservable() } //修改flatmap为flatmaplatest观察打印输出的变化
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+
+👦🏻.score.value = 85
+
+player.value = 👧🏼
+
+👦🏻.score.value = 95 //用flatMap时输出用flatMapLatest时不输出
+
+👧🏼.score.value = 100
+}
+```
+#### 提示：在这个例子中使用`flatMap`可能会产生意想不到的结果。在给👧🏼赋`值player.value`后`👧🏼.score`将开始发送元素。但是之前的内部队列`👦🏻.score`仍将继续发送元素.把`flatMap`改为`flatMapLatest`后只有内部的`Observable`队列(`👧🏼.score`)最近的元素才会被发送,设置`👦🏻.score.value`将不会有结果
+
+#### 提示:flatMapLatest其实是组合了 map 和switchLatest 操作符.
+
+#### 3. scan 以一个初始值开始执行累加的闭包，并发送每次累加后的结果
+```swift
+example("scan") {
+let disposeBag = DisposeBag()
+
+Observable.of(10, 100, 1000)
+.scan(1) { aggregateValue, newValue in
+aggregateValue + newValue
+}
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+```
+第六章 Filtering and Conditional Operators 过滤操作
+---
+选择性的发送原`Observable`队列的元素
+#### 1. filter
+只发送原`Observable`队列中符合条件的元素
+```swift
+example("filter") {
+let disposeBag = DisposeBag()
+
+Observable.of(
+"🐱", "🐰", "🐶",
+"🐸", "🐱", "🐰",
+"🐹", "🐸", "🐱")
+.filter {
+$0 == "🐱"
+}
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+
+```
+#### 2. distinctUntilChanged 阻止同一`Observable`队列多次发送相同元素
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/distinct.png)
+```
+example("distinctUntilChanged") {
+let disposeBag = DisposeBag()
+
+Observable.of("🐱", "🐷", "🐱", "🐱", "🐱", "🐵", "🐱")
+.distinctUntilChanged()
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+```
+
+#### 3. elementAt
+只发`Observable`队列送指定位置上的元素
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/elementat.png)
+
+```
+example("elementAt") {
+let disposeBag = DisposeBag()
+
+Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
+.elementAt(3)
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+```
+
+#### 4. single 发送`Observabel`队列中的第一个满足条件的元素，如果没满足条件的元素这会发送一个错误(`error`)
+```swift 
+example("single") {
+let disposeBag = DisposeBag()
+
+Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
+.single()
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+
+example("single with conditions") {
+let disposeBag = DisposeBag()
+
+Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
+.single { $0 == "🐸" }
+.subscribe { print($0) }
+.addDisposableTo(disposeBag)
+
+Observable.of("🐱", "🐰", "🐶", "🐱", "🐰", "🐶")
+.single { $0 == "🐰" }
+.subscribe { print($0) }
+.addDisposableTo(disposeBag)
+
+Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
+.single { $0 == "🔵" }
+.subscribe { print($0) }
+.addDisposableTo(disposeBag)
+}
+```
+#### 5. take发送`Observable`队列d的前n个元素
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/take.png)
+```swift
+example("take") {
+let disposeBag = DisposeBag()
+
+Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
+.take(3)
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+//"🐱", "🐰", "🐶",
+```
+#### 6. takeLast发送`Observable`队列d的最后n个元素
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takelast.png)
+
+```swift
+example("take") {
+let disposeBag = DisposeBag()
+
+Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
+.take(3)
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+//"🐸", "🐷","🐵"
+```
+#### 7. takeWhile 发送指定条件为真前所有的元素
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takewhile.png)
+```swift
+example("takeWhile") {
+let disposeBag = DisposeBag()
+
+Observable.of(1, 2, 3, 4, 5, 6)
+.takeWhile { $0 < 4 }
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+//1,2,3
+```
+#### 8. takeUntil选择一个参考队列在该队列发送元素前发送本队列的元素
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takeuntil.png)
+```swift
+example("takeUntil") {
+let disposeBag = DisposeBag()
+
+let sourceSequence = PublishSubject<String>()
+let referenceSequence = PublishSubject<String>()
+
+sourceSequence
+.takeUntil(referenceSequence)
+.subscribe { print($0) }
+.addDisposableTo(disposeBag)
+
+sourceSequence.onNext("🐱")
+sourceSequence.onNext("🐰")
+sourceSequence.onNext("🐶")
+
+referenceSequence.onNext("🔴")
+
+sourceSequence.onNext("🐸")
+sourceSequence.onNext("🐷")
+sourceSequence.onNext("🐵")
+}
+```
+#### 9.skip 阻止前n个元素的发送
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skip.png)
+```swift
+example("skipWhile") {
+let disposeBag = DisposeBag()
+
+Observable.of(1, 2, 3, 4, 5, 6)
+.skipWhile { $0 < 4 }
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+.addDisposableTo(disposeBag)
+}
+```
+#### 10.skipWhileWithIndex阻止条件成立之前的元素发送， 闭包发送每个元素的`index`
+```swift
+example("skipWhileWithIndex") {
+let disposeBag = DisposeBag()
+
+Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
+.skipWhileWithIndex { element, index in
+index < 3
+}
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+```
+#### 11. skipUntil选择一个参考队列在该队列发送元素前发阻止本队列发送元素
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipuntil.png)
+```swift
+example("skipUntil") {
+let disposeBag = DisposeBag()
+
+let sourceSequence = PublishSubject<String>()
+let referenceSequence = PublishSubject<String>()
+
+sourceSequence
+.skipUntil(referenceSequence)
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+
+sourceSequence.onNext("🐱")
+sourceSequence.onNext("🐰")
+sourceSequence.onNext("🐶")
+
+referenceSequence.onNext("🔴")
+
+sourceSequence.onNext("🐸")
+sourceSequence.onNext("🐷")
+sourceSequence.onNext("🐵")
+}
+```
