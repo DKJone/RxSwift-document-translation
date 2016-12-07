@@ -2,7 +2,7 @@
 对RxSwift 官方playground的翻译，playGround基于2016年-12月-1日版本  
 重要提示：使用Rx.playground
 ---
-1.   打开Rx.xcworkspace.
+1. 打开Rx.xcworkspace.
 2. 编译 RxSwift-macOS 项目 (Product → Build)
 3. 在项目导航栏你打开RX playground
 4. 打开调试窗口(View → Debug Area → Show Debug Area)
@@ -24,7 +24,7 @@ RxSwift是官方的Reactiv Extension（一款同时支持多种语言平台）�
 
 如果 一个`Observable`发出一个`next`事件(`Event.next(Element)`),它人可以继续发出更多的事件。但是如果它发出了一个错误事件(`Event.error(ErrorType)`)或者一个完成事件(`Event.completed`)，他讲不再能够发送更多的事件给订阅者。
 
-这样介绍队列的语法更简洁
+这样介绍上面的概念更简洁
 ```
 next* (error | completed)?
 ```
@@ -35,10 +35,9 @@ next* (error | completed)?
 --tap--tap----------tap--> // "|" =永远不停止，例如按钮的点击事件队列
 ```
 
-### Observables and observers (aka subscribers)
-可观测的和观测者(也叫作订阅者)
+#### Observables and observers (aka subscribers)
 ---
-可订阅对象(Observables)不会执行他们的订阅闭包，除非他们有一个订阅者。例如下面这个例子，他的闭永远不会执行因为他没有一个订阅者
+可订阅对象(Observables)在有订阅者之前不会执行他们的订阅闭包。例如下面这个例子，他的闭包永远不会执行因为他没有一个订阅者
 ```swift
 example("Observable with no subscribers") {
 _ = Observable<String>.create { observerOfString -> Disposable in
@@ -66,7 +65,7 @@ print(event)
 提示：不要关心`Observables`是怎么创建的，我们将在之后介绍
 提示：`subscribe(_:)`返回一个`Disposable`实例代表一次性资源比如一个订阅。他在之前的简单例子中被忽略了，但是它常常正确的处理了。这意味着将它放入内容一个` DisposeBag`实例中。在此后的例子中我们将包含适当的处理，因为实践出真知！
 
-你可已在这里获取更多
+你可以在这里获取更多
 - [Disposing section](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md#disposing)
 - [Getting Started](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md)
 
@@ -74,7 +73,7 @@ print(event)
 第二章：创建和订阅可订阅者
 ---
 有下面几种创建和订阅` Observable`队列的方式
-#### 1. never:绝对不要创建一个永不结束且不发送任何事件的队列
+#### 1. never:创建一个不会停止也不会发送任何元素的`Observable`队列
 
 ```swift
 example("never") {
@@ -89,7 +88,7 @@ print("This will never be printed")
 neverSequenceSubscription.addDisposableTo(disposeBag)
 }
 ```
-#### 2. empty:创建一个空的`Observable`只会发送一个完成事件 
+#### 2. empty:创建一个只会发送一个完成事件的`Observable`队列
 ```swift
 example("empty") {
 let disposeBag = DisposeBag()
@@ -693,7 +692,7 @@ sourceSequence.onNext("🐷")
 sourceSequence.onNext("🐵")
 }
 ```
-#### 9.skip 阻止前n个元素的发送
+#### 9.skip 跳过前n个元素，发送之后的元素
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skip.png)
 ```swift
 example("skipWhile") {
@@ -707,7 +706,7 @@ Observable.of(1, 2, 3, 4, 5, 6)
 .addDisposableTo(disposeBag)
 }
 ```
-#### 10.skipWhileWithIndex阻止条件成立之前的元素发送， 闭包发送每个元素的`index`
+#### 10.skipWhileWithIndex跳过条件成立之前的元素，发送满足条件之后的元素，闭包发送每个元素的`index`
 ```swift
 example("skipWhileWithIndex") {
 let disposeBag = DisposeBag()
@@ -720,7 +719,7 @@ index < 3
 .addDisposableTo(disposeBag)
 }
 ```
-#### 11. skipUntil选择一个参考队列在该队列发送元素前发阻止本队列发送元素
+#### 11. skipUntil跳过参考队列发送元素前本队列发送的元素
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipuntil.png)
 ```swift
 example("skipUntil") {
@@ -745,3 +744,55 @@ sourceSequence.onNext("🐷")
 sourceSequence.onNext("🐵")
 }
 ```
+第七章 Connectable Operators可连接的操作符
+---
+可连接`Observable`队列除了在被订阅时不发送元素之外都和普通的`Observable`队列类似，作为替代可连接的`Observable`队列只在他们的`connect()`方法执行后才会发送元素。所以你可以订阅所有你想订阅的连接型`OBservable`队列在他发送元素之前
+####  提示这个页面里的suo'you'li'zhi所有例子都有注释掉的代码，试着去掉这些注释重新运行观察结果，然后再把注释添加回来  
+在开始学习可连接队列前我们来回顾一下不可连接队列的操作
+```swift
+func sampleWithoutConnectableOperators() {
+printExampleHeader(#function)
+
+let interval = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+
+_ = interval
+.subscribe(onNext: { print("Subscription: 1, Event: \($0)") })
+
+delay(5) {
+_ = interval
+.subscribe(onNext: { print("Subscription: 2, Event: \($0)") })
+}
+}
+```
+#### 提示：`interval`创建一个在每个周期(`Period`)后发送元素的`Observable`队列
+![](http://reactivex.io/documentation/operators/images/interval.c.png)
+
+
+#### 1. publish 把元`Observable`队列转换成可连接的`Observable`队列
+![](http://reactivex.io/documentation/operators/images/publishConnect.c.png)
+```swift
+func sampleWithPublish() {
+printExampleHeader(#function)
+
+let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+.publish()
+
+_ = intSequence
+.subscribe(onNext: { print("Subscription 1:, Event: \($0)") })
+
+delay(2) { _ = intSequence.connect() }
+
+delay(4) {
+_ = intSequence
+.subscribe(onNext: { print("Subscription 2:, Event: \($0)") })
+}
+
+delay(6) {
+_ = intSequence
+.subscribe(onNext: { print("Subscription 3:, Event: \($0)") })
+}
+}
+
+//sampleWithPublish() // ⚠️ Uncomment to run this example; comment to stop running
+```
+#### 提示：执行操作室调度这只是一个抽象出来的概念，比如在指定线程和`dispatch queues`
