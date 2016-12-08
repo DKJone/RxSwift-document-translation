@@ -747,7 +747,7 @@ sourceSequence.onNext("🐵")
 第七章 Connectable Operators可连接的操作符
 ---
 可连接`Observable`队列除了在被订阅时不发送元素之外都和普通的`Observable`队列类似，作为替代可连接的`Observable`队列只在他们的`connect()`方法执行后才会发送元素。所以你可以订阅所有你想订阅的连接型`OBservable`队列在他发送元素之前
-####  提示这个页面里的suo'you'li'zhi所有例子都有注释掉的代码，试着去掉这些注释重新运行观察结果，然后再把注释添加回来  
+####  提示:这个页面里的所有例子都有注释掉的代码，试着去掉这些注释重新运行观察结果，然后再把注释添加回来  
 在开始学习可连接队列前我们来回顾一下不可连接队列的操作
 ```swift
 func sampleWithoutConnectableOperators() {
@@ -795,4 +795,215 @@ _ = intSequence
 
 //sampleWithPublish() // ⚠️ Uncomment to run this example; comment to stop running
 ```
-#### 提示：执行操作室调度这只是一个抽象出来的概念，比如在指定线程和`dispatch queues`
+#### 提示：执行操作的调度者只是一个抽象出来的概念，比如在指定线程和`dispatch queues`
+
+#### 2.replay 把原`Observable`队列转换为可连接队列。并把`bufferSize`大小的之前元素推送给新的订阅者
+```swift
+func sampleWithReplayBuffer() {
+printExampleHeader(#function)
+
+let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+.replay(5)
+
+_ = intSequence
+.subscribe(onNext: { print("Subscription 1:, Event: \($0)") })
+
+delay(2) { _ = intSequence.connect() }
+
+delay(4) {
+_ = intSequence
+.subscribe(onNext: { print("Subscription 2:, Event: \($0)") })
+}
+
+delay(8) {
+_ = intSequence
+.subscribe(onNext: { print("Subscription 3:, Event: \($0)") })
+}
+}
+```
+#### 3.multicast 转化原`Observable`队列为可连接队列，并发送指定的`Subject`
+```swift
+func sampleWithMulticast() {
+printExampleHeader(#function)
+
+let subject = PublishSubject<Int>()
+
+_ = subject
+.subscribe(onNext: { print("Subject: \($0)") })
+
+let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+.multicast(subject)
+
+_ = intSequence
+.subscribe(onNext: { print("\tSubscription 1:, Event: \($0)") })
+
+delay(2) { _ = intSequence.connect() }
+
+delay(4) {
+_ = intSequence
+.subscribe(onNext: { print("\tSubscription 2:, Event: \($0)") })
+}
+
+delay(6) {
+_ = intSequence
+.subscribe(onNext: { print("\tSubscription 3:, Event: \($0)") })
+}
+}
+
+```
+
+第八章 Error Handling Operators错误处理操作符
+----
+处理一个`Observable`发出的错误通知的操作符
+
+#### 1. catchErrorJustReturn，让队列从错误事件中恢复，并发送一个单一元素的队列，然后停止原队列
+```swift
+example("catchErrorJustReturn") {
+let disposeBag = DisposeBag()
+
+let sequenceThatFails = PublishSubject<String>()
+
+sequenceThatFails
+.catchErrorJustReturn("😊")
+.subscribe { print($0) }
+.addDisposableTo(disposeBag)
+
+sequenceThatFails.onNext("😬")
+sequenceThatFails.onNext("😨")
+sequenceThatFails.onNext("😡")
+sequenceThatFails.onNext("🔴")
+sequenceThatFails.onError(TestError.test)
+}
+```
+
+#### 2. catchError从错误事件中恢复并切换到提供的恢复队列
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/catch.png)
+```swift
+example("catchError") {
+let disposeBag = DisposeBag()
+
+let sequenceThatFails = PublishSubject<String>()
+let recoverySequence = PublishSubject<String>()
+
+sequenceThatFails
+.catchError {
+print("Error:", $0)
+return recoverySequence
+}
+.subscribe { print($0) }
+.addDisposableTo(disposeBag)
+
+sequenceThatFails.onNext("😬")
+sequenceThatFails.onNext("😨")
+sequenceThatFails.onNext("😡")
+sequenceThatFails.onNext("🔴")
+sequenceThatFails.onError(TestError.test)
+
+recoverySequence.onNext("😊")
+}
+```
+
+#### 3. retry 从错误中恢复并尝试重新订阅产生错误的队列
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/retry.png)
+```swift
+example("retry maxAttemptCount") {
+let disposeBag = DisposeBag()
+var count = 1
+
+let sequenceThatErrors = Observable<String>.create { observer in
+observer.onNext("🍎")
+observer.onNext("🍐")
+observer.onNext("🍊")
+
+if count < 5 {
+observer.onError(TestError.test)
+print("Error encountered")
+count += 1
+}
+
+observer.onNext("🐶")
+observer.onNext("🐱")
+observer.onNext("🐭")
+observer.onCompleted()
+
+return Disposables.create()
+}
+
+sequenceThatErrors
+.retry(3)
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+
+```
+附录：Debugging Operators调试操作符
+---
+为了方便调试Rx代码的操作符
+#### 1. debug
+打印多有的`subscriptions, events, disposals`
+```swift
+example("debug") {
+let disposeBag = DisposeBag()
+var count = 1
+
+let sequenceThatErrors = Observable<String>.create { observer in
+observer.onNext("🍎")
+observer.onNext("🍐")
+observer.onNext("🍊")
+
+if count < 5 {
+observer.onError(TestError.test)
+print("Error encountered")
+count += 1
+}
+
+observer.onNext("🐶")
+observer.onNext("🐱")
+observer.onNext("🐭")
+observer.onCompleted()
+
+return Disposables.create()
+}
+
+sequenceThatErrors
+.retry(3)
+.debug()
+.subscribe(onNext: { print($0) })
+.addDisposableTo(disposeBag)
+}
+```
+#### 2. RxSwift.Resources.total 提供一个对所有`allocation`的计数，来观察是否有内存泄漏
+```swift
+#if NOT_IN_PLAYGROUND
+#else
+example("RxSwift.Resources.total") {
+print(RxSwift.Resources.total)
+
+let disposeBag = DisposeBag()
+
+print(RxSwift.Resources.total)
+
+let variable = Variable("🍎")
+
+let subscription1 = variable.asObservable().subscribe(onNext: { print($0) })
+
+print(RxSwift.Resources.total)
+
+let subscription2 = variable.asObservable().subscribe(onNext: { print($0) })
+
+print(RxSwift.Resources.total)
+
+subscription1.dispose()
+
+print(RxSwift.Resources.total)
+
+subscription2.dispose()
+
+print(RxSwift.Resources.total)
+}
+
+print(RxSwift.Resources.total)
+#endif
+````
+#### 提示：`RxSwift.Resources.total` 默认是不可用的, 一般不在发布版本中启用. 
+
