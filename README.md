@@ -10,6 +10,7 @@
  1. 编译 RxSwift-macOS 项目 (Product → Build)
  1. 在项目导航栏你打开RX playground
  1. 打开调试窗口 (**View** → **Debug Area** → **Show Debug Area**).
+ 
  ----  
 
 ## 目录:  
