@@ -23,7 +23,7 @@
  1. [第七章 Connectable](/Connectable_Operators.md)  
  1. [第八章 错误处理](/Error_Handling_Operators.md)  
  1. [附录一 调试](/Debugging_Operators.md)  
- 1. [附录二 cocoapods](/Enable_RxSwift.resourceCount.md)  
+ 1. [附录二 cocoapods](/Enable_RxSwift.md)  
 
 
  [下一章](/Introduction.md)
