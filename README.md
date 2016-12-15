@@ -11,7 +11,8 @@
  1. 在项目导航栏你打开RX playground
  1. 打开调试窗口 (**View** → **Debug Area** → **Show Debug Area**).
  ----  
- ## 目录:  
+
+## 目录:  
  1. [序章 介绍](/Introduction.md)  
  1. [第一章 创建并使用Observables](/Creating_and_Subscribing_to_Observables.md)  
  1. [第二章 使用Subjects](/Working_with_Subjects.md)  
