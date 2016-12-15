@@ -63,7 +63,7 @@ example("of") {
         .addDisposableTo(disposeBag)
 }
 ```
- > 这个例子也包括了使用`subscribe(onNext:)`简便方法，和`subscribe(_:)`订阅所有时间句柄不同(next,error,completeed),`subscribes(onNext:)`订阅一个元素的除了完成和错误(Error、Completed)的其他事件而且只产生下一个事件元素，当然还有  `subscribe(onCompleted:)` 和 subscribe(onError:)`  只订阅而对应的事件.也有一个`subscribe(onNext:onError:onCompleted:onDisposed:)`方法，可以允许你响应一个或者多个类型的事件，包括由于某种原因使这个订阅终止和正常处理。
+> 这个例子也包括了使用`subscribe(onNext:)`简便方法，和`subscribe(_:)`订阅所有时间句柄不同(next,error,completeed),`subscribes(onNext:)`订阅一个元素的除了完成和错误(Error、Completed)的其他事件而且只产生下一个事件元素，当然还有  `subscribe(onCompleted:)` 和 subscribe(onError:)`  只订阅而对应的事件.也有一个`subscribe(onNext:onError:onCompleted:onDisposed:)`方法，可以允许你响应一个或者多个类型的事件，包括由于某种原因使这个订阅终止和正常处理。
  例如:
 ```swift
  someObservable.subscribe(
@@ -72,8 +72,9 @@ example("of") {
      onCompleted: { print("Completed") },
      onDisposed: { print("Disposed") }
  )
-```
+```  
 ----
+
 ## from
  由一个`SequenceType`创建一个`Observable`队列，例如`Array, Dictionary, Set`
 ```swift
@@ -85,9 +86,10 @@ example("from") {
         .addDisposableTo(disposeBag)
 }
 ```
- > 这个示例也示范了使用默认的声明`$0`去替代明确的声明。
-----
-## create
+ > 这个示例也示范了使用默认的声明`$0`去替代明确的声明。  
+----  
+
+## create 
  创建一个自定义的`Observable`队列. [更多信息](http://reactivex.io/documentation/operators/create.html)
 ```swift
 example("create") {
