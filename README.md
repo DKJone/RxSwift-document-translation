@@ -2,7 +2,7 @@
 
 [翻译后的完整项目地址](https://github.com/DKJone/RxSwift)
 ---------------------
-对RxSwift 官方playground的翻译，playGround基于2016年-12月-1日版本  
+对RxSwift 官方playground的翻译，playGround基于2016年12月1日版本  
  
  
  > # 重要提示：使用Rx.playground：
