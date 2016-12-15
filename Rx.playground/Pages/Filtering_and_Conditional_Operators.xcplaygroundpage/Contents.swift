@@ -1,18 +1,18 @@
 /*:
- > # IMPORTANT: To use **Rx.playground**:
- 1. Open **Rx.xcworkspace**.
- 1. Build the **RxSwift-macOS** scheme (**Product** → **Build**).
- 1. Open **Rx** playground in the **Project navigator**.
- 1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
+ > # 重要提示：使用Rx.playground：
+ 1.  打开Rx.xcworkspace.
+ 1. 编译 RxSwift-macOS 项目 (Product → Build)
+ 1. 在项目导航栏你打开RX playground
+ 1. 打开调试窗口 (**View** → **Debug Area** → **Show Debug Area**).
  ----
- [Previous](@previous) - [Table of Contents](Table_of_Contents)
+ [上一页](@previous) - [返回目录](Table_of_Contents)
  */
 import RxSwift
 /*:
-# Filtering and Conditional Operators
-Operators that selectively emit elements from a source `Observable` sequence.
+# 第五章 过滤
+选择性的发送原`Observable`队列的元素。
 ## `filter`
-Emits only those elements from an `Observable` sequence that meet the specified condition. [More info](http://reactivex.io/documentation/operators/filter.html)
+只发送原`Observable`队列中符合条件的元素。 [更多信息](http://reactivex.io/documentation/operators/filter.html)
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/filter.png)
 */
 example("filter") {
@@ -31,7 +31,7 @@ example("filter") {
 /*:
  ----
 ## `distinctUntilChanged`
- Suppresses sequential duplicate elements emitted by an `Observable` sequence. [More info](http://reactivex.io/documentation/operators/distinct.html)
+ 阻止同一`Observable`队列多次发送相同元素。 [更多信息](http://reactivex.io/documentation/operators/distinct.html)
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/distinct.png)
 */
 example("distinctUntilChanged") {
@@ -45,7 +45,7 @@ example("distinctUntilChanged") {
 /*:
  ----
  ## `elementAt`
- Emits only the element at the specified index of all elements emitted by an `Observable` sequence. [More info](http://reactivex.io/documentation/operators/elementat.html)
+ 只发`Observable`队列送指定位置上的元素。[更多信息](http://reactivex.io/documentation/operators/elementat.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/elementat.png)
  */
 example("elementAt") {
@@ -59,7 +59,7 @@ example("elementAt") {
 /*:
  ----
  ## `single`
- Emits only the first element (or the first element that meets a condition) emitted by an `Observable` sequence. Will throw an error if the `Observable` sequence does not emit exactly one element.
+ 发送`Observabel`队列中的第一个满足条件的元素，如果没满足条件的元素这会发送一个错误(`error`)。
  */
 example("single") {
     let disposeBag = DisposeBag()
@@ -91,7 +91,7 @@ example("single with conditions") {
 /*:
  ----
  ## `take`
- Emits only the specified number of elements from the beginning of an `Observable` sequence. [More info](http://reactivex.io/documentation/operators/take.html)
+ 发送`Observable`队列d的前n个元素。 [更多信息](http://reactivex.io/documentation/operators/take.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/take.png)
  */
 example("take") {
@@ -105,7 +105,7 @@ example("take") {
 /*:
  ----
  ## `takeLast`
- Emits only the specified number of elements from the end of an `Observable` sequence. [More info](http://reactivex.io/documentation/operators/takelast.html)
+ takeLast发送`Observable`队列d的最后n个元素。 [更多信息](http://reactivex.io/documentation/operators/takelast.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takelast.png)
  */
 example("takeLast") {
@@ -119,7 +119,7 @@ example("takeLast") {
 /*:
  ----
  ## `takeWhile`
- Emits elements from the beginning of an `Observable` sequence as long as the specified condition evaluates to `true`. [More info](http://reactivex.io/documentation/operators/takewhile.html)
+ 发送满足条件的元素。[更多信息](http://reactivex.io/documentation/operators/takewhile.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takewhile.png)
  */
 example("takeWhile") {
@@ -133,7 +133,7 @@ example("takeWhile") {
 /*:
  ----
  ## `takeUntil`
- Emits elements from a source `Observable` sequence until a reference `Observable` sequence emits an element. [More info](http://reactivex.io/documentation/operators/takeuntil.html)
+ 选择一个参考队列在该队列发送元素前发送本队列的元素。 [更多信息](http://reactivex.io/documentation/operators/takeuntil.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takeuntil.png)
  */
 example("takeUntil") {
@@ -160,7 +160,7 @@ example("takeUntil") {
 /*:
  ----
  ## `skip`
- Suppresses emitting the specified number of elements from the beginning of an `Observable` sequence. [More info](http://reactivex.io/documentation/operators/skip.html)
+ 跳过前n个元素，发送之后的元素. [更多信息](http://reactivex.io/documentation/operators/skip.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skip.png)
  */
 example("skip") {
@@ -174,7 +174,7 @@ example("skip") {
 /*:
  ----
  ## `skipWhile`
- Suppresses emitting the elements from the beginning of an `Observable` sequence that meet the specified condition. [More info](http://reactivex.io/documentation/operators/skipwhile.html)
+ 跳过满足条件的元素，发送之后的元素. [更多信息](http://reactivex.io/documentation/operators/skipwhile.html)
  ![](http://reactivex.io/documentation/operators/images/skipWhile.c.png)
  */
 example("skipWhile") {
@@ -188,7 +188,7 @@ example("skipWhile") {
 /*:
  ----
  ## `skipWhileWithIndex`
- Suppresses emitting the elements from the beginning of an `Observable` sequence that meet the specified condition, and emits the remaining elements. The closure is also passed each element's index.
+skipWhileWithIndex跳过条件成立之前的元素，发送满足条件之后的元素，闭包发送每个元素的`index`
  */
 example("skipWhileWithIndex") {
     let disposeBag = DisposeBag()
@@ -203,7 +203,7 @@ example("skipWhileWithIndex") {
 /*:
  ----
  ## `skipUntil`
- Suppresses emitting the elements from a source `Observable` sequence until a reference `Observable` sequence emits an element. [More info](http://reactivex.io/documentation/operators/skipuntil.html)
+跳过参考队列发送元素前本队列发送的元素。[更多信息](http://reactivex.io/documentation/operators/skipuntil.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipuntil.png)
  */
 example("skipUntil") {
@@ -228,4 +228,4 @@ example("skipUntil") {
     sourceSequence.onNext("🐵")
 }
 
-//: [Next](@next) - [Table of Contents](Table_of_Contents)
+//: [下一章](@next) - [返回目录](Table_of_Contents)

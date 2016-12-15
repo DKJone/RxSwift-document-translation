@@ -1,18 +1,18 @@
 /*:
- > # IMPORTANT: To use **Rx.playground**:
- 1. Open **Rx.xcworkspace**.
- 1. Build the **RxSwift-macOS** scheme (**Product** → **Build**).
- 1. Open **Rx** playground in the **Project navigator**.
- 1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
+ > # 重要提示：使用Rx.playground：
+ 1.  打开Rx.xcworkspace.
+ 1. 编译 RxSwift-macOS 项目 (Product → Build)
+ 1. 在项目导航栏你打开RX playground
+ 1. 打开调试窗口 (**View** → **Debug Area** → **Show Debug Area**).
  ----
- [Previous](@previous) - [Table of Contents](Table_of_Contents)
+ [上一页](@previous) - [返回目录](Table_of_Contents)
  */
 import RxSwift
 /*:
-# Error Handling Operators
-Operators that help to recover from error notifications from an Observable.
+# 第八章 错误处理
+处理一个`Observable`发出的错误通知的操作符。
 ## `catchErrorJustReturn`
-Recovers from an Error event by returning an `Observable` sequence that emits a single element and then terminates. [More info](http://reactivex.io/documentation/operators/catch.html)
+ 让队列从错误事件中恢复，并发送一个单一元素的队列，然后停止原队列。 [更多信息](http://reactivex.io/documentation/operators/catch.html)
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/catch.png)
 */
 example("catchErrorJustReturn") {
@@ -34,7 +34,7 @@ example("catchErrorJustReturn") {
 /*:
  ----
  ## `catchError`
- Recovers from an Error event by switching to the provided recovery `Observable` sequence. [More info](http://reactivex.io/documentation/operators/catch.html)
+ catchError从错误事件中恢复并切换到提供的恢复队列。 [更多信息](http://reactivex.io/documentation/operators/catch.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/catch.png)
  */
 example("catchError") {
@@ -62,7 +62,7 @@ example("catchError") {
 /*:
  ----
  ## `retry`
- Recovers repeatedly Error events by resubscribing to the `Observable` sequence, indefinitely. [More info](http://reactivex.io/documentation/operators/retry.html)
+ 从错误中恢复并尝试重新订阅产生错误的队列。 [更多信息](http://reactivex.io/documentation/operators/retry.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/retry.png)
  */
 example("retry") {
@@ -96,7 +96,7 @@ example("retry") {
 /*:
  ----
  ## `retry(_:)`
-Recovers repeatedly from Error events by resubscribing to the `Observable` sequence, up to `maxAttemptCount` number of retries. [More info](http://reactivex.io/documentation/operators/retry.html)
+从错误中恢复并尝试重新订阅产生错误的队列, 在达到`maxAttemptCount`次数之前尝试. [更多信息](http://reactivex.io/documentation/operators/retry.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/retry.png)
  */
 example("retry maxAttemptCount") {
@@ -128,4 +128,4 @@ example("retry maxAttemptCount") {
         .addDisposableTo(disposeBag)
 }
 
-//: [Next](@next) - [Table of Contents](Table_of_Contents)
+//: [下一章](@next) - [返回目录](Table_of_Contents)

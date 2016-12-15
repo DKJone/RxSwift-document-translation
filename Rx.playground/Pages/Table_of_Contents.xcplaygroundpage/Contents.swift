@@ -12,11 +12,11 @@
  1. [第三章 组合](Combining_Operators)
  1. [第四章 转换](Transforming_Operators)
  1. [第五章 过滤](Filtering_and_Conditional_Operators)
- 1. [第六章 ](Mathematical_and_Aggregate_Operators)
  1. [第六章 数学理论](Mathematical_and_Aggregate_Operators)
  1. [第七章 Connectable](Connectable_Operators)
  1. [第八章 错误处理](Error_Handling_Operators)
- 1. [附录 调试](Debugging_Operators)
+ 1. [附录一 调试](Debugging_Operators)
+ 1. [附录二 cocoapods](Enable_RxSwift.resourceCount)
  */
 
 //: [下一章](@next)

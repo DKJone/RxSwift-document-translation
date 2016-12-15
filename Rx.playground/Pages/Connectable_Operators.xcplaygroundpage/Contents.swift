@@ -1,21 +1,21 @@
 /*:
- > # IMPORTANT: To use **Rx.playground**:
- 1. Open **Rx.xcworkspace**.
- 1. Build the **RxSwift-macOS** scheme (**Product** → **Build**).
- 1. Open **Rx** playground in the **Project navigator**.
- 1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
+ > # 重要提示：使用Rx.playground：
+ 1.  打开Rx.xcworkspace.
+ 1. 编译 RxSwift-macOS 项目 (Product → Build)
+ 1. 在项目导航栏你打开RX playground
+ 1. 打开调试窗口 (**View** → **Debug Area** → **Show Debug Area**).
  ----
- [Previous](@previous) - [Table of Contents](Table_of_Contents)
+ [上一页](@previous) - [返回目录](Table_of_Contents)
  */
 import RxSwift
 
 playgroundShouldContinueIndefinitely()
 /*:
-# Connectable Operators
- Connectable `Observable` sequences resembles ordinary `Observable` sequences, except that they not begin emitting elements when subscribed to, but instead, only when their `connect()` method is called. In this way, you can wait for all intended subscribers to subscribe to a connectable `Observable` sequence before it begins emitting elements.
- > Within each example on this page is a commented-out method. Uncomment that method to run the example, and then comment it out again to stop running the example.
- #
- Before learning about connectable operators, let's take a look at an example of a non-connectable operator:
+# 第七章 Connectable
+ 可连接`Observable`队列除了在被订阅时不发送元素之外都和普通的`Observable`队列类似，作为替代可连接的`Observable`队列只在他们的`connect()`方法执行后才会发送元素。所以你可以订阅所有你想订阅的连接型`OBservable`队列在他发送元素之前。
+ > 这个页面里的所有例子都有注释掉的代码，试着去掉这些注释重新运行观察结果，然后再把注释添加回来 。
+ # 
+ 在开始学习可连接队列前我们来回顾一下不可连接队列的操作:
 */
 func sampleWithoutConnectableOperators() {
     printExampleHeader(#function)
@@ -31,13 +31,13 @@ func sampleWithoutConnectableOperators() {
     }
 }
 
-//sampleWithoutConnectableOperators() // ⚠️ Uncomment to run this example; comment to stop running
+//sampleWithoutConnectableOperators() // ⚠️ 去掉这些注释重新运行观察结果，然后再把注释添加回来.
 /*:
- > `interval` creates an `Observable` sequence that emits elements after each `period`, on the specified scheduler. [More info](http://reactivex.io/documentation/operators/interval.html)
+ > `interval`创建一个在每个周期(`Period`)后发送元素的`Observable`队列. [更多信息](http://reactivex.io/documentation/operators/interval.html)
  ![](http://reactivex.io/documentation/operators/images/interval.c.png)
  ----
  ## `publish`
- Converts the source `Observable` sequence into a connectable sequence. [More info](http://reactivex.io/documentation/operators/publish.html)
+ 把元`Observable`队列转换成可连接的`Observable`队列。 [更多信息](http://reactivex.io/documentation/operators/publish.html)
  ![](http://reactivex.io/documentation/operators/images/publishConnect.c.png)
  */
 func sampleWithPublish() {
@@ -62,14 +62,14 @@ func sampleWithPublish() {
     }
 }
 
-//sampleWithPublish() // ⚠️ Uncomment to run this example; comment to stop running
+//sampleWithPublish() // ⚠️ 去掉这些注释重新运行观察结果，然后再把注释添加回来.
 
-//: > Schedulers are an abstraction of mechanisms for performing work, such as on specific threads or dispatch queues. [More info](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Schedulers.md)
+//: > 执行操作的调度者只是一个抽象出来的概念，比如在指定线程和`dispatch queues`。 [更多信息](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Schedulers.md)
 
 /*:
  ----
  ## `replay`
- Converts the source `Observable` sequence into a connectable sequence, and will replay `bufferSize` number of previous emissions to each new subscriber. [More info](http://reactivex.io/documentation/operators/replay.html)
+把原`Observable`队列转换为可连接队列。并把`bufferSize`大小的之前元素推送给新的订阅者。 [更多信息](http://reactivex.io/documentation/operators/replay.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replay.png)
  */
 func sampleWithReplayBuffer() {
@@ -94,12 +94,12 @@ func sampleWithReplayBuffer() {
     }
 }
 
-// sampleWithReplayBuffer() // ⚠️ Uncomment to run this example; comment to stop running
+// sampleWithReplayBuffer() // ⚠️ 去掉这些注释重新运行观察结果，然后再把注释添加回来.
 
 /*:
  ----
  ## `multicast`
- Converts the source `Observable` sequence into a connectable sequence, and broadcasts its emissions via the specified `subject`.
+ 转化原`Observable`队列为可连接队列，并发送指定的`Subject`。
  */
 func sampleWithMulticast() {
     printExampleHeader(#function)
@@ -128,6 +128,6 @@ func sampleWithMulticast() {
     }
 }
 
-//sampleWithMulticast() // ⚠️ Uncomment to run this example; comment to stop running
+//sampleWithMulticast() // ⚠️ 去掉这些注释重新运行观察结果，然后再把注释添加回来.
 
-//: [Next](@next) - [Table of Contents](Table_of_Contents)
+//: [下一章](@next) - [返回目录](Table_of_Contents)

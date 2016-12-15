@@ -1,9 +1,9 @@
-//: [Back](@previous)
+//: [返回前一页](@previous)
 /*:
- Follow these instructions to enable `RxSwift.Resources.total` in your project:
- #
+ # 附录二 cocoapods
+ 通过以下指令把 `RxSwift.Resources.total` 加入你的项目:
  **CocoaPods**
- 1. Add a `post_install` hook to your Podfile, e.g.:
+ 1. 添加一个 `post_install` 在你的 Podfile中, 例如:
  ```
  target 'AppTarget' do
  pod 'RxSwift'
@@ -21,10 +21,10 @@
      end
  end
  ```
- 2. Run `pod update`.
- 3. Build project (**Product** → **Build**).
+ 2. 执行 `pod update`.
+ 3. 编译项目 (**Product** → **Build**).
  #
  **Carthage**
- 1. Run `carthage build --configuration Debug`.
- 2. Build project (**Product** → **Build**).
+ 1. 执行 `carthage build --configuration Debug`.
+ 2. 编译项目 (**Product** → **Build**).
  */

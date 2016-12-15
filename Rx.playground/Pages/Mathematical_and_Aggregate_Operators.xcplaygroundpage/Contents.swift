@@ -1,18 +1,18 @@
 /*:
- > # IMPORTANT: To use **Rx.playground**:
- 1. Open **Rx.xcworkspace**.
- 1. Build the **RxSwift-macOS** scheme (**Product** → **Build**).
- 1. Open **Rx** playground in the **Project navigator**.
- 1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
+ > # 重要提示：使用Rx.playground：
+ 1.  打开Rx.xcworkspace.
+ 1. 编译 RxSwift-macOS 项目 (Product → Build)
+ 1. 在项目导航栏你打开RX playground
+ 1. 打开调试窗口 (**View** → **Debug Area** → **Show Debug Area**).
  ----
- [Previous](@previous) - [Table of Contents](Table_of_Contents)
+ [上一页](@previous) - [返回目录](Table_of_Contents)
  */
 import RxSwift
 /*:
- # Mathematical and Aggregate Operators
- Operators that operate on the entire sequence of items emitted by an `Observable`.
+ # 第六章 数学理论
+ 对整个`Observable`队列的所有元素进行操作。
  ## `toArray`
- Converts an `Observable` sequence into an array, emits that array as a new single-element `Observable` sequence, and then terminates. [More info](http://reactivex.io/documentation/operators/to.html)
+ 把一个`Observable` 队列转换成一个`Array`,然后发送一个包含这个数组的单一元素队列（single-element `Observable` sequence），发送完成停止队列[更多信息](http://reactivex.io/documentation/operators/to.html)
  ![](http://reactivex.io/documentation/operators/images/to.c.png)
  */
 example("toArray") {
@@ -26,7 +26,7 @@ example("toArray") {
 /*:
  ----
  ## `reduce`
- Begins with an initial seed value, and then applies an accumulator closure to all elements emitted by an `Observable` sequence, and returns the aggregate result as a single-element `Observable` sequence. [More info](http://reactivex.io/documentation/operators/reduce.html)
+ 以一个种子值作为开始执行累加闭包的内容，将操作完售楼元素得到的结果作为一个单一元素队列发送，复燃后停止队列。[更多信息](http://reactivex.io/documentation/operators/reduce.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/reduce.png)
  */
 example("reduce") {
@@ -40,7 +40,7 @@ example("reduce") {
 /*:
  ----
  ## `concat`
- Joins elements from inner `Observable` sequences of an `Observable` sequence in a sequential manner, waiting for each sequence to terminate successfully before emitting elements from the next sequence. [More info](http://reactivex.io/documentation/operators/concat.html)
+ 将另一个`Observable`队列元素有序的加入内部`Observable`队列，直到一个队列`completed`事件发出后在开始加入下一个队列元素，`completed`事件发送之前的事件不会被发送新队列之前的元素 [更多信息](http://reactivex.io/documentation/operators/concat.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/concat.png)
  */
 example("concat") {
@@ -69,4 +69,4 @@ example("concat") {
     subject2.onNext("🐭")
 }
 
-//: [Next](@next) - [Table of Contents](Table_of_Contents)
+//: [下一章](@next) - [返回目录](Table_of_Contents)

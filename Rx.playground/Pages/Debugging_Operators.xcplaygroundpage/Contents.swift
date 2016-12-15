@@ -1,18 +1,18 @@
 /*:
- > # IMPORTANT: To use **Rx.playground**:
- 1. Open **Rx.xcworkspace**.
- 1. Build the **RxSwift-macOS** scheme (**Product** → **Build**).
- 1. Open **Rx** playground in the **Project navigator**.
- 1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
+ > # 重要提示：使用Rx.playground：
+ 1.  打开Rx.xcworkspace.
+ 1. 编译 RxSwift-macOS 项目 (Product → Build)
+ 1. 在项目导航栏你打开RX playground
+ 1. 打开调试窗口 (**View** → **Debug Area** → **Show Debug Area**).
  ----
- [Previous](@previous) - [Table of Contents](Table_of_Contents)
+ [上一页](@previous) - [返回目录](Table_of_Contents)
  */
 import RxSwift
 /*:
- # Debugging Operators
- Operators to help debug Rx code.
+ # 附录(一) 调试
+为了方便调试Rx代码的操作符。
  ## `debug`
- Prints out all subscriptions, events, and disposals.
+ 打印多有的`subscriptions, events, disposals`
  */
 example("debug") {
     let disposeBag = DisposeBag()
@@ -46,7 +46,7 @@ example("debug") {
 /*:
  ----
  ## `RxSwift.Resources.total`
- Provides a count of all Rx resource allocations, which is useful for detecting leaks during development.
+ RxSwift.Resources.total 提供一个对所有`allocation`的计数，来观察是否有内存泄漏。
  */
 #if NOT_IN_PLAYGROUND
 #else
@@ -78,6 +78,6 @@ example("RxSwift.Resources.total") {
     
 print(RxSwift.Resources.total)
 #endif
-//: > `RxSwift.Resources.total` is not enabled by default, and should generally not be enabled in Release builds. [Click here](Enable_RxSwift.Resources.total) for instructions on how to enable it.
+//: > `RxSwift.Resources.total` 默认是不可用的, 一般不在发布版本中启用. [点此](Enable_RxSwift.Resources.total) 了解怎样使其可用.
 
-//: [Next](@next) - [Table of Contents](Table_of_Contents)
+//: [下一章](@next) - [返回目录](Table_of_Contents)
