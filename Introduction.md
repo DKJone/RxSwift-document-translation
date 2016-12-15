@@ -1,15 +1,4 @@
-
- > # 重要提示：使用Rx.playground：
- 1.  打开Rx.xcworkspace.
- 1. 编译 RxSwift-macOS 项目 (Product → Build)
- 1. 在项目导航栏你打开RX playground
- 1. 打开调试窗口 (**View** → **Debug Area** → **Show Debug Area**).
- ----
- [上一页](/)
-
-
-
-
+ [上一页](/README.md)
 
 # 序章 介绍
 
@@ -21,7 +10,7 @@
  RxSwift 是官方的[Reactive Extensions](http://reactivex.io) (也称作 Rx),  （一款同时支持[多种语言平台](http://reactivex.io/languages.html).）的实现
 
 
- ## 概念
+## 概念
  
  **任何一个Observable的实例都是一个队列**
  
@@ -29,7 +18,7 @@
  * 一个Observable (`ObservableType`)等价于一个 `SequenceType`
  * `ObservableType.subscribe(_:)`方法等价于`SequenceType.generate()`
  * `ObservableType.subscribe(_:)`需要一个观察者(`ObserverType`)作为参数，他将自动订阅由Observable发出的事件队列，而不是手动的用`Next()`方法订阅回调。
- */
+
 
  如果 一个`Observable`发出一个`next`事件(`Event.next(Element)`),它人可以继续发出更多的事件。但是如果它发出了一个错误事件(`Event.error(ErrorType)`)或者一个完成事件(`Event.completed`)，他讲不再能够发送更多的事件给订阅者。
  
@@ -47,10 +36,10 @@
 
  > 这些图表称作大理石图. 你可以在[RxMarbles.com](http://rxmarbles.com).学到更多
 
- ### Observables and observers (也称作 subscribers)
+### Observables and observers (也称作 subscribers)
  
  可订阅对象(Observables)在有订阅者之前不会执行他们的订阅闭包。例如下面这个例子，他的闭包永远不会执行因为他没有一个订阅者
- */
+ 
 ```swift
 example("Observable with no subscribers") {
     _ = Observable<String>.create { observerOfString -> Disposable in
@@ -77,8 +66,8 @@ example("Observable with subscriber") {
 }
 ```
  > 不要关心`Observables`是怎么创建的，我们将在[下一章](@next)介绍.
- #
+#
  > `subscribe(_:)`返回一个`Disposable`实例代表一次性资源比如一个订阅。他在之前的简单例子中被忽略了，但是它常常正确的处理了。这意味着将它放入内容一个` DisposeBag`实例中。在此后的例子中我们将包含适当的处理，因为实践出真知！
  🙂. 你可以在这里获取更多[Disposing section](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md#disposing) -  [入门指南](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md).
 
-[下一章](/Creating_and_Subscribing_to_Observables.md) - [返回目录](/)
+[下一章](/Creating_and_Subscribing_to_Observables.md) - [返回目录](/README.md)
