@@ -64,5 +64,5 @@ example("concat") {
     
     subject2.onNext("🐭")
 }
-
-//: [下一章](/Connectable_Operators.md) - [返回目录](/README.md)
+```
+[下一章](/Connectable_Operators.md) - [返回目录](/README.md)

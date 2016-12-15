@@ -242,5 +242,5 @@ example("skipUntil") {
     sourceSequence.onNext("🐷")
     sourceSequence.onNext("🐵")
 }
-
+```
 [下一章](/Mathematical_and_Aggregate_Operators.md) - [返回目录](/README.md)
