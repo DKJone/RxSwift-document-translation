@@ -1,5 +1,5 @@
 
- [上一页](/README.md)  - [返回目录](/README.md)
+ [上一页](/Creating_and_Subscribing_to_Observables.md)  - [返回目录](/README.md)
 
 # 第二章 使用Subjects
  一个Subject是获取Rx的观测者和可观察属性(`Observable`)的桥梁和代理。因为是观察者，所以它可以订阅一个或者多个可观察对象(`Observable`)。因为是可观察对象(`Observable`)，它可以通过元素观察和重发他们，也可以发送新的元素。[更多信息](http://reactivex.io/documentation/subject.html)
@@ -117,4 +117,4 @@ example("Variable") {
 
 
 
-[下一章](/Creating_and_Subscribing_to_Observables.md) - [返回目录](/README.md)
+[下一章](/Combining_Operators.md) - [返回目录](/README.md)

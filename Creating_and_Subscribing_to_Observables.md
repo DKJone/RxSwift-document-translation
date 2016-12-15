@@ -1,4 +1,4 @@
- [上一页](/Creating_and_Subscribing_to_Observables.md)  - [返回目录](/README.md)
+ [上一页](/Introduction.md)  - [返回目录](/README.md)
 
 
 # 第一章 创建并使用Observables
@@ -73,6 +73,7 @@ example("of") {
      onDisposed: { print("Disposed") }
  )
 ```  
+
 ----
 
 ## from
@@ -87,6 +88,7 @@ example("from") {
 }
 ```
  > 这个示例也示范了使用默认的声明`$0`去替代明确的声明。  
+
 ----  
 
 ## create 
@@ -109,6 +111,7 @@ example("create") {
 }
 ```
 ----
+
 ## range
   创建一段连续区间的整数的`Observable`队列，发送完成后终止队列. [更多信息](http://reactivex.io/documentation/operators/range.html)
 ```swift
@@ -120,7 +123,9 @@ example("range") {
         .addDisposableTo(disposeBag)
 }
 ```
+
 ----
+
 ## repeatElement
  创建一个无线发送元素的`Observable`队列。 [获取更多](http://reactivex.io/documentation/operators/repeat.html)
 ```swift
@@ -134,7 +139,9 @@ example("repeatElement") {
 }
 ```
  > 这个示例还展示了使用`take`操作符去返回一个指定数量元素的队列。
+
 ----
+
 ## generate
  创建一个只要提供的条件成立就持续生成值的队列
 ```swift
@@ -150,7 +157,9 @@ example("generate") {
         .addDisposableTo(disposeBag)
 }
 ```
+
 ----
+
 ## deferred
  为所有订阅者创建一个新的`Observable`队列. [更多信息](http://reactivex.io/documentation/operators/defer.html)
 ```swift
@@ -180,7 +189,9 @@ example("deferred") {
         .addDisposableTo(disposeBag)
 }
 ```
+
 ----
+
 ## error
  创建一个不发送任何元素并且立即停止的错误`Observable`队列
 ```swift
@@ -192,7 +203,9 @@ example("error") {
         .addDisposableTo(disposeBag)
 }
 ```
+
 ----
+
 ## doOn
 为所有发出和接受的事件添加一个附加的操作 [更多信息](http://reactivex.io/documentation/operators/do.html)
 ```swift
@@ -207,4 +220,4 @@ example("doOn") {
 ```
  > 当然也会有`doOnNext(_:), doOnError(_:), doOnCompleted(_:)`这些方法去拦截特定的事件，`doOn(onNext:onError:onCompleted:)`拦截一个或多个的事件信号。
 
-[下一章](/Creating_and_Subscribing_to_Observables.md) - [返回目录](/README.md)
+[下一章](/Working_with_Subjects.md) - [返回目录](/README.md)
