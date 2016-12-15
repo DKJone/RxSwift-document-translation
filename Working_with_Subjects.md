@@ -9,7 +9,7 @@ extension ObservableType {
     /**
      为id添加观察者，并打印所有发出的事件
      - parameter id: 订阅者的id.
-     ```swift
+     */
     func addObserver(_ id: String) -> Disposable {
         return subscribe { print("Subscription:", id, "Event:", $0) }
     }
@@ -39,8 +39,12 @@ example("PublishSubject") {
     subject.onNext("🅱️")
 }
 ```
- > 提示：这个示例还是用了`onNext(_:)`简便方法，等价于使用`on(.next(_:))`,让用户使用订阅元素的下一个事件。也有`onError(_:) 和onCompleted()`简便方法分别等价于`on(.error(_:)) 和   on(.completed)`。
+> 提示：这个示例还是用了`onNext(_:)`简便方法，等价于使用`on(.next(_:))`,让用户使用订阅元素的下一个事件。也有`onError(_:) 和onCompleted()`简便方法分别等价于`on(.error(_:)) 和   on(.completed)`。
+
+
 ----
+
+
 ## ReplaySubject
  广播新事件给所有订阅者，并指定新事件的之前的缓存大小。
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replaysubject.png)
@@ -58,7 +62,11 @@ example("ReplaySubject") {
     subject.onNext("🅱️")
 }
 ```
+
+
 ----
+
+
 ## BehaviorSubject
 广播新的事件给订阅者，并发送最近的(或者初始值)给行的而订阅者
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/behaviorsubject.png)
@@ -81,7 +89,11 @@ example("BehaviorSubject") {
 }
 ```
  > 注意这些之前的例子中都遗漏了什么？完成事件！`PublishSubject, ReplaySubject,BehaviorSubject`当他们即将被处理时，不能自动发出完成事件。
+
+
 ----
+
+
 ## Variable
  覆盖`BehaviorSubject`所以它将发送最近(或初始)的值给新的订阅者，并维持最近值得状态。`Variable`将不会发送错误事件，然而他会在销毁前发送完成事件和结束。
 ```swift
