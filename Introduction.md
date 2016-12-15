@@ -65,7 +65,7 @@ example("Observable with subscriber") {
     }
 }
 ```
- > 不要关心`Observables`是怎么创建的，我们将在[下一章](@next)介绍.
+ > 不要关心`Observables`是怎么创建的，我们将在[下一章](/Creating_and_Subscribing_to_Observables.md)介绍.
 #
  > `subscribe(_:)`返回一个`Disposable`实例代表一次性资源比如一个订阅。他在之前的简单例子中被忽略了，但是它常常正确的处理了。这意味着将它放入内容一个` DisposeBag`实例中。在此后的例子中我们将包含适当的处理，因为实践出真知！
  🙂. 你可以在这里获取更多[Disposing section](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md#disposing) -  [入门指南](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md).
